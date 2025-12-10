@@ -1,0 +1,36 @@
+# Challenge 2 - Abstract Class Survey (versi pemula)
+
+from abc import ABC, abstractmethod
+
+# class abstrak
+class Survey(ABC):
+    @abstractmethod
+    def processing(self):
+        pass
+
+
+# class turunan
+class SeismicSurvey(Survey):
+    def processing(self):
+        print("Processing seismik: filtering data...")
+
+class GravitySurvey(Survey):
+    def processing(self):
+        print("Processing gravitasi: upward continuation...")
+
+class MagnetikSurvey(Survey):
+    def processing(self):
+        print("Processing magnetik: anomaly mapping...")
+
+
+# program utama
+s1 = SeismicSurvey()
+s2 = GravitySurvey()
+s3 = MagnetikSurvey()
+
+daftar_survey = [s1, s2, s3]
+
+print("=== Proses Data Survey ===")
+
+for s in daftar_survey:
+    s.processing()
