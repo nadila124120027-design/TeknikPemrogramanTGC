@@ -1,0 +1,41 @@
+# Program Sistem Data Survey Seismik (versi sederhana ala maba)
+
+# data awal
+survey = {
+    "Survey_A": [
+        {"trace_id": 1, "receiver": "R1", "offset": 100, "QC_flag": "OK"},
+        {"trace_id": 2, "receiver": "R2", "offset": 150, "QC_flag": "OK"},
+        {"trace_id": 3, "receiver": "R3", "offset": 200, "QC_flag": "BAD"}
+    ],
+    "Survey_B": [
+        {"trace_id": 4, "receiver": "R1", "offset": 120, "QC_flag": "OK"},
+        {"trace_id": 5, "receiver": "R4", "offset": 250, "QC_flag": "OK"},
+        {"trace_id": 6, "receiver": "R2", "offset": 300, "QC_flag": "BAD"}
+    ],
+    "Survey_C": [
+        {"trace_id": 7, "receiver": "R5", "offset": 180, "QC_flag": "OK"}
+    ]
+}
+
+print("=== Sistem Data Survey Seismik ===")
+
+# tampilkan semua data
+print("\nData survey:")
+for nama_survey in survey:
+    print("\n", nama_survey)
+    for trace in survey[nama_survey]:
+        print(trace)
+
+# hitung jumlah trace yang QC nya OK
+jumlah_ok = 0
+jumlah_bad = 0
+
+for nama_survey in survey:
+    for trace in survey[nama_survey]:
+        if trace["QC_flag"] == "OK":
+            jumlah_ok += 1
+        else:
+            jumlah_bad += 1
+
+print("\nJumlah trace QC OK :", jumlah_ok)
+print("Jumlah trace QC BAD:", jumlah_bad)
