@@ -1,0 +1,32 @@
+# Import library yang dibutuhkan
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. Membuat data sederhana dari sampel
+data = pd.DataFrame({
+    'X': [0, 20, 50, 80, 100],
+    'Y': [0, 50, 20, 60, 100],
+    'Total_Field': [43210, 43220, 43280, 43100, 43500]
+})
+
+# 2. Mengatur data agar bisa dibuat kontur
+# pivot_table untuk membuat grid X-Y
+grid = data.pivot_table(index='Y', columns='X', values='Total_Field')
+
+# Membuat meshgrid (X dan Y dalam bentuk grid)
+X_grid, Y_grid = np.meshgrid(grid.columns, grid.index)
+
+# Data Z untuk kontur
+Z = grid.values
+
+# 3. Membuat plot kontur
+plt.figure(figsize=(6, 5))
+contour = plt.contourf(X_grid, Y_grid, Z, cmap='jet')
+
+plt.colorbar(contour, label='Total Field (nT)')
+plt.xlabel('X (m)')
+plt.ylabel('Y (m)')
+plt.title('Peta Anomali Medan Magnetik')
+
+plt.show()
