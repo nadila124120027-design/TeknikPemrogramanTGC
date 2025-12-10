@@ -1,0 +1,62 @@
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+
+st.title("Aplikasi Plot Sederhana (Versi Mahasiswa Baru)")
+
+# Data dummy (biar ada yang diplot)
+data = np.random.randn(50,50)
+
+# ======================
+# 1. Pilihan Colormap
+# ======================
+st.write("### Pilih Colormap")
+cmaplist = ["gray", "viridis", "plasma", "jet", "hot"]
+pilih_cmap = st.selectbox("Pilih cmap:", cmaplist)
+
+# ======================
+# 2. Kontrol vmin vmax
+# ======================
+st.write("### Scale Mode")
+mode = st.radio("Pilih mode:", ["Auto", "Manual"])
+
+if mode == "Manual":
+    vmin = st.slider("vmin", float(data.min()), float(data.max()), float(data.min()))
+    vmax = st.slider("vmax", float(data.min()), float(data.max()), float(data.max()))
+else:
+    vmin = None
+    vmax = None
+
+# ======================
+# 3. Opsi Tambahan
+# ======================
+st.write("### Opsi Tambahan (pilih salah satu)")
+opsi = st.selectbox(
+    "Pilih opsi tambahan:",
+    ["Tidak ada", "Balik sumbu waktu (vertical flip)", "Tampilkan sebagian data", "Simpan gambar"]
+)
+
+dataplot = data.copy()
+
+if opsi == "Balik sumbu waktu (vertical flip)":
+    dataplot = np.flipud(dataplot)
+
+elif opsi == "Tampilkan sebagian data":
+    batas = st.slider("Tampilkan baris sampai:", 10, data.shape[0], 25)
+    dataplot = dataplot[:batas, :]
+
+elif opsi == "Simpan gambar":
+    st.write("Klik tombol di bawah untuk simpan.")
+    if st.button("Simpan sebagai PNG"):
+        figx, axx = plt.subplots()
+        axx.imshow(dataplot, cmap=pilih_cmap, vmin=vmin, vmax=vmax)
+        plt.savefig("plot_saya.png")
+        st.success("Berhasil disimpan sebagai plot_saya.png")
+
+# ======================
+# 4. Tampilkan Plot
+# ======================
+fig, ax = plt.subplots()
+ax.imshow(dataplot, cmap=pilih_cmap, vmin=vmin, vmax=vmax)
+ax.set_title("Plot Data Sederhana")
+st.pyplot(fig)
