@@ -1,0 +1,29 @@
+# Import library yang dibutuhkan
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data posisi X, Y dan nilai Total Field
+x = np.array([0, 0, 50, 50, 100, 100])
+y = np.array([0, 50, 0, 50, 0, 50])
+total_field = np.array([43280, 43280, 43100, 43240, 43050, 43500])
+
+# Membuat grid dari data (supaya bisa dibuat kontur)
+xi = np.linspace(min(x), max(x), 100)
+yi = np.linspace(min(y), max(y), 100)
+Xi, Yi = np.meshgrid(xi, yi)
+
+# Interpolasi nilai total_field ke grid
+from scipy.interpolate import griddata
+Zi = griddata((x, y), total_field, (Xi, Yi), method='cubic')
+
+# Plot kontur
+plt.figure(figsize=(6,5))
+contour = plt.contourf(Xi, Yi, Zi, levels=20)
+plt.colorbar(contour, label="Total Field (nT)")
+
+# Memberi label
+plt.title("Peta Anomali Medan Magnet (Data Sederhana)")
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+
+plt.show()
