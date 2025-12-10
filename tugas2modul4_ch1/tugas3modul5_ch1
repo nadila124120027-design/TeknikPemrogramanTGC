@@ -1,0 +1,40 @@
+# Challenge 1 - Class Sensor (versi maba)
+
+# class utama
+class Sensor:
+    def __init__(self, id_sensor, lokasi, jenis):
+        self.id_sensor = id_sensor
+        self.lokasi = lokasi
+        self.jenis = jenis
+
+    def info(self):
+        print("ID Sensor:", self.id_sensor)
+        print("Lokasi    :", self.lokasi)
+        print("Jenis     :", self.jenis)
+
+
+# class turunan
+class SensorSeismik(Sensor):
+    def __init__(self, id_sensor, lokasi, jenis, frekuensi_sampling):
+        super().__init__(id_sensor, lokasi, jenis)
+        self.frekuensi_sampling = frekuensi_sampling
+
+    def jumlah_sampel(self, data_amplitudo):
+        return len(data_amplitudo)
+
+
+# program utama (contoh pemakaian)
+s1 = Sensor("S001", "Sumatra", "Suhu")
+s1.info()
+
+print("------------------")
+
+s2 = SensorSeismik("SS001", "Lampung", "Seismik", 100)
+
+s2.info()
+print("Frekuensi Sampling:", s2.frekuensi_sampling)
+
+data = [10, 20, 30, 25, 15, 5]
+
+jumlah = s2.jumlah_sampel(data)
+print("Jumlah sampel data:", jumlah)
