@@ -1,0 +1,49 @@
+# Program Normalisasi TWT - versi super simple
+
+# data langsung di dalam program
+data_text = """shot,receiver,twt
+0,100,200
+0,200,350
+0,300,480
+0,400,600
+"""
+
+# pecah baris
+baris = data_text.strip().split("\n")
+
+# simpan ke list
+data = []
+for i in range(1, len(baris)):
+    b = baris[i].split(",")
+    shot = int(b[0])
+    receiver = int(b[1])
+    twt = float(b[2])
+    data.append([shot, receiver, twt])
+
+print("Data awal:")
+for d in data:
+    print(d)
+
+# cari twt minimum
+twt_min = data[0][2]
+for d in data:
+    if d[2] < twt_min:
+        twt_min = d[2]
+
+print("\nTWT min:", twt_min)
+
+# normalisasi
+hasil = []
+for d in data:
+    try:
+        norm = (d[2] - twt_min) / (600 - twt_min)
+    except:
+        norm = 0
+
+    hasil.append([d[0], d[1], d[2], norm])
+
+print("\nHasil normalisasi:")
+for h in hasil:
+    print(h)
+
+print("\nSelesai!")
